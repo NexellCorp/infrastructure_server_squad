@@ -1,0 +1,14 @@
+# KEEP THIS IN SYNC WITH .gitignore
+Dockerfile
+db.sqlite3
+.git
+.puzzle
+dist
+build
+secret.dat
+static
+.tests
+**/__pycache__
+**/*.pyc
+**/*.swp
+tmp
