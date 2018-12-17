@@ -1,0 +1,39 @@
+dist: trusty
+language: python
+python:
+  - 3.5
+cache: pip
+addons:
+  postgresql: 9.5
+  apt:
+    packages:
+      - bc
+      - chromium-browser
+      - snakefood
+      - software-properties-common
+env:
+  - TESTENV=travis-postgresql DATABASE=ENGINE=django.db.backends.postgresql_psycopg2:NAME=squad:USER=postgres:PASSWORD=squad:HOST=127.0.0.1:PORT=5432
+  - TESTENV=travis-sqlite3 DATABASE=
+
+before_install:
+  - if test -n "$DATABASE"; then ./scripts/travis-postgresql; fi
+
+install:
+  - pip install --upgrade setuptools
+  - pip install -r requirements-dev.txt
+  - pip freeze
+  - sudo apt-get install nodejs npm
+  - npm install
+
+script:
+  - ./scripts/travis
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+  irc:
+    on_success: change
+    on_failure: change
+    channels:
+      - "chat.freenode.net#linaro-qa"

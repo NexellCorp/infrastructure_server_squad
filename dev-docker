@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -eu
+
+
+basedir="$(readlink -f "$(dirname $0)")"
+tmpdir="$basedir"/tmp
+datadir="$tmpdir"/data
+hostport=8000
+dockerimgname=nexelldocker/squad
+mkdir -p "$datadir"
+
+dockerfile="$datadir"/../Dockerfile.dev
+(
+  sed -e '1,/WORKDIR/!d' "$basedir"/Dockerfile
+  echo "COPY requirements-dev.txt /srv"
+  echo "RUN pip3 install -r /srv/requirements-dev.txt"
+  echo 'RUN apt-get install -qy snakefood'
+  echo "RUN groupadd -g $(id -g) $(id -gn)"
+  echo "RUN useradd -m -u $(id -u) -g $(id -g) -s /bin/bash ${USER}"
+  echo "RUN apt-get update && apt-get install -y sudo chromium"
+  echo "RUN echo "${USER}:${USER}" | chpasswd"
+  echo "COPY squad-run.sh /app/."
+  echo "USER ${USER}"
+) > "$dockerfile"
+
+docker build -t ${dockerimgname} -f "$dockerfile" .
+
+exec docker run \
+  --env=XDG_DATA_HOME=/app/tmp/data \
+  --publish=${hostport}:8000 \
+  --volume="$basedir":/app \
+  --rm \
+  -it ${dockerimgname} "$@"
