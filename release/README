@@ -1,0 +1,11 @@
+# Usage
+1. Make Docker Image
+- $ ./makeDockerImage
+
+2. Running Squad Docker image
+- $ ./runDockerOnServer
+
+3. Into the docker container And running squad system
+- $ cd /app
+- $ squad-admin createsuperuser #only once
+- $ ./runSquad.sh
