@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -eu
+
+
+basedir="$(readlink -f "$(dirname $0)")"
+tmpdir="$basedir"/tmp
+datadir="$tmpdir"/data
+hostport=5000
+dockerimgname=nexelldocker/squad:production
+mkdir -p "$datadir"
+
+exec docker run \
+  --env=XDG_DATA_HOME=/app/tmp/data \
+  --publish=${hostport}:5000 \
+  --volume="$basedir":/app \
+  --rm \
+  -it ${dockerimgname} "$@"
