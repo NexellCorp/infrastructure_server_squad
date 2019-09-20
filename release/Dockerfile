@@ -14,7 +14,7 @@ RUN pip3 install --no-binary :all: -r /srv/requirements.txt
 
 RUN pip3 install squad
 
-RUN apt-get update && apt-get install -y sudo vim
+RUN apt-get update && apt-get install -y sudo vim screen ssh
 
 ARG user=nexellSquad
 ARG group=nexellSquad
@@ -30,3 +30,5 @@ RUN echo "${user} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 USER nexellSquad
+
+COPY db.sqlite3 /usr/local/lib/python3.5/dist-packages/

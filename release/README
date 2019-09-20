@@ -8,4 +8,4 @@
 3. Into the docker container And running squad system
 - $ cd /app
 - $ squad-admin createsuperuser #only once
-- $ ./runSquad.sh
+- $ sudo ./runSquad.sh

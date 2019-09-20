@@ -1,3 +1,4 @@
 #!/bin/sh
 
-docker build --tag nexelldocker/squad:production ./
+#docker build --tag nexelldocker/squad:production ./
+docker build --tag nexelldocker/squad:2019.09 ./
