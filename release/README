@@ -9,3 +9,10 @@
 - $ cd /app
 - $ squad-admin createsuperuser #only once
 - $ ./runSquad.sh
+
+4. Create superuser
+- $ squad-admin admin
+
+# 201909
+Create new Dockerfile for using squad module as same version as before and copy database.
+It copies squad configuration sqlite3 DB file.
